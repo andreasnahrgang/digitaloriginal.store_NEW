@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import { NFTCard } from '@/components/nft/NFTCard';
 import { nftApi } from '@/db/api';

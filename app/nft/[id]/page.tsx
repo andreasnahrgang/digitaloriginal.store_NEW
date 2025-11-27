@@ -1,5 +1,8 @@
+'use client';
+
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'next/navigation';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -10,7 +13,8 @@ import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function NFTDetail() {
-  const { id } = useParams<{ id: string }>();
+  const params = useParams();
+  const id = params?.id as string;
   const [nft, setNft] = useState<NFTWithArtist | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -44,7 +48,7 @@ export default function NFTDetail() {
     return (
       <div className="min-h-screen flex flex-col justify-center items-center py-20 px-4">
         <h2 className="text-2xl font-bold mb-4">NFT Not Found</h2>
-        <Link to="/marketplace">
+        <Link href="/marketplace">
           <Button variant="outline">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Marketplace
@@ -57,7 +61,7 @@ export default function NFTDetail() {
   return (
     <div className="min-h-screen py-12 px-4">
       <div className="max-w-7xl mx-auto">
-        <Link to="/marketplace">
+        <Link href="/marketplace">
           <Button variant="ghost" className="mb-6">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Marketplace

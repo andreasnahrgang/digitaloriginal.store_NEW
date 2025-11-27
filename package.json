@@ -1,13 +1,14 @@
 {
   "name": "nft-marketplace",
   "version": "0.1.0",
-  "type": "module",
   "scripts": {
-    "dev": "echo 'Do not use this command, only use lint to check'",
-    "build": "echo 'Do not use this command, only use lint to check'",
-    "lint": "tsgo -p tsconfig.check.json; npx biome lint; .rules/check.sh;npx tailwindcss -i ./src/index.css -o /dev/null 2>&1 | grep -E '^(CssSyntaxError|Error):.*' || true;vite build --minify false --logLevel error --outDir /tmp/outdir"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
+    "next": "^14.2.0",
     "@hookform/resolvers": "^5.2.2",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-alert-dialog": "^1.1.15",
@@ -57,8 +58,6 @@
     "react-helmet-async": "^2.0.5",
     "react-hook-form": "^7.66.0",
     "react-resizable-panels": "^2.1.8",
-    "react-router": "^7.9.5",
-    "react-router-dom": "^7.9.5",
     "recharts": "^2.15.3",
     "sonner": "^2.0.7",
     "streamdown": "^1.4.0",
@@ -69,6 +68,8 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.0",
     "@biomejs/biome": "2.3.4",
     "@tailwindcss/container-queries": "^0.1.1",
     "@types/lodash": "^4.17.20",
@@ -76,13 +77,10 @@
     "@types/react-dom": "^19.2.2",
     "@types/video-react": "^0.15.8",
     "@typescript/native-preview": "7.0.0-dev.20251103.1",
-    "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.21",
     "miaoda-sc-plugin": "^1.0.4",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.11",
-    "typescript": "~5.9.3",
-    "vite": "^5.1.4",
-    "vite-plugin-svgr": "^4.5.0"
+    "typescript": "~5.9.3"
   }
 }

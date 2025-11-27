@@ -1,5 +1,7 @@
+'use client';
+
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import {
   Carousel,
@@ -43,7 +45,7 @@ export default function Home() {
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
               Explore, collect, and trade extraordinary NFTs from talented artists around the world
             </p>
-            <Link to="/marketplace">
+            <Link href="/marketplace">
               <Button size="lg" className="group">
                 Explore Marketplace
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -68,7 +70,7 @@ export default function Home() {
                 <CarouselContent>
                   {featuredNFTs.map((nft) => (
                     <CarouselItem key={nft.id} className="md:basis-1/2 lg:basis-1/3">
-                      <Link to="/marketplace" className="block">
+                      <Link href="/marketplace" className="block">
                         <div className="group relative overflow-hidden rounded-lg border border-border transition-all hover:shadow-lg hover:shadow-primary/20">
                           <div className="aspect-square overflow-hidden">
                             <img
