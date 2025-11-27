@@ -42,9 +42,8 @@ A minimalist NFT marketplace built with modern web technologies, featuring a sle
 ## 🛠️ Technology Stack
 
 ### Frontend
-- **Framework**: React 18 with TypeScript
-- **Build Tool**: Vite
-- **Routing**: React Router v7
+- **Framework**: Next.js 14 (App Router)
+- **Runtime**: React 18 with TypeScript
 - **UI Components**: shadcn/ui
 - **Styling**: Tailwind CSS
 - **Icons**: Lucide React
@@ -65,6 +64,22 @@ A minimalist NFT marketplace built with modern web technologies, featuring a sle
 
 ```
 /workspace/app-7uja2c23lczl/
+├── app/                            # Next.js App Router
+│   ├── layout.tsx                  # Root layout
+│   ├── page.tsx                    # Homepage
+│   ├── marketplace/
+│   │   └── page.tsx                # NFT marketplace
+│   ├── nft/
+│   │   └── [id]/
+│   │       └── page.tsx            # Dynamic NFT detail page
+│   ├── about/
+│   │   └── page.tsx                # About page
+│   ├── resources/
+│   │   └── page.tsx                # Resources page
+│   ├── faq/
+│   │   └── page.tsx                # FAQ page
+│   └── contact/
+│       └── page.tsx                # Contact page
 ├── src/
 │   ├── components/
 │   │   ├── common/
@@ -75,14 +90,6 @@ A minimalist NFT marketplace built with modern web technologies, featuring a sle
 │   │   │   ├── NFTCarousel.tsx     # Homepage carousel
 │   │   │   └── NFTGrid.tsx         # Marketplace grid
 │   │   └── ui/                     # shadcn/ui components
-│   ├── pages/
-│   │   ├── Home.tsx                # Homepage
-│   │   ├── Marketplace.tsx         # NFT marketplace
-│   │   ├── NFTDetail.tsx           # Individual NFT page
-│   │   ├── About.tsx               # About page
-│   │   ├── Resources.tsx           # Resources page
-│   │   ├── FAQ.tsx                 # FAQ page
-│   │   └── Contact.tsx             # Contact page
 │   ├── db/
 │   │   ├── supabase.ts             # Supabase client
 │   │   └── api.ts                  # Database API functions
@@ -90,14 +97,12 @@ A minimalist NFT marketplace built with modern web technologies, featuring a sle
 │   │   └── types.ts                # TypeScript definitions
 │   ├── lib/
 │   │   └── utils.ts                # Utility functions
-│   ├── routes.tsx                  # Route configuration
-│   ├── App.tsx                     # Main app component
 │   └── index.css                   # Global styles
 ├── supabase/
 │   └── migrations/                 # Database migrations
 ├── public/                         # Static assets
-├── vercel.json                     # Vercel configuration
-├── VERCEL_DEPLOYMENT.md            # Deployment guide
+├── next.config.mjs                 # Next.js configuration
+├── DEPLOYMENT_GUIDE.md             # Deployment instructions
 └── package.json                    # Dependencies
 ```
 
@@ -123,10 +128,11 @@ A minimalist NFT marketplace built with modern web technologies, featuring a sle
 
 3. **Set up environment variables**
    
-   Create a `.env` file in the root directory:
+   Create a `.env.local` file in the root directory:
    ```env
-   VITE_SUPABASE_URL=your_supabase_project_url
-   VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   NEXT_PUBLIC_APP_ID=your_app_id
    ```
 
 4. **Set up Supabase database**
@@ -141,7 +147,28 @@ A minimalist NFT marketplace built with modern web technologies, featuring a sle
    npm run dev
    ```
 
-   The application will be available at `http://localhost:5173`
+   The application will be available at `http://localhost:3000`
+
+## 🚢 Deployment
+
+This Next.js application can be deployed to various platforms:
+
+### Vercel (Recommended)
+```bash
+npm i -g vercel
+vercel
+```
+
+### Netlify
+```bash
+npm i -g netlify-cli
+netlify deploy --prod
+```
+
+### Docker
+See `DEPLOYMENT_GUIDE.md` for detailed instructions.
+
+For complete deployment instructions, see **[DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)**
 
 ## 📊 Database Schema
 
