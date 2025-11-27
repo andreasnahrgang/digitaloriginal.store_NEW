@@ -1,6 +1,4 @@
-'use client';
-
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import type { NFTWithArtist } from '@/types/types';
@@ -11,7 +9,7 @@ interface NFTCardProps {
 
 export function NFTCard({ nft }: NFTCardProps) {
   return (
-    <Link href={`/nft/${nft.id}`}>
+    <Link to={`/nft/${nft.id}`}>
       <Card className="group overflow-hidden transition-all hover:shadow-lg hover:shadow-primary/20 cursor-pointer">
         <div className="aspect-square overflow-hidden">
           <img

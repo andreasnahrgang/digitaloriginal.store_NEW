@@ -1,7 +1,4 @@
-'use client';
-
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import {
   NavigationMenu,
@@ -16,7 +13,7 @@ import { useState } from 'react';
 import { toast } from 'sonner';
 
 export default function Header() {
-  const pathname = usePathname();
+  const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const navItems = [
@@ -38,7 +35,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2">
             <img
               src="https://miaoda-conversation-file.s3cdn.medo.dev/user-7uiwbqz6q8lc/conv-7uja2c23lczk/20251127/file-7ujeylhhucjk.png"
               alt="Digital Original"
@@ -50,10 +47,10 @@ export default function Header() {
             <NavigationMenuList>
               {navItems.map((item) => (
                 <NavigationMenuItem key={item.path}>
-                  <Link href={item.path} legacyBehavior passHref>
+                  <Link to={item.path}>
                     <NavigationMenuLink
                       className={navigationMenuTriggerStyle()}
-                      active={pathname === item.path}
+                      active={location.pathname === item.path}
                     >
                       {item.name}
                     </NavigationMenuLink>
@@ -80,10 +77,10 @@ export default function Header() {
                   {navItems.map((item) => (
                     <Link
                       key={item.path}
-                      href={item.path}
+                      to={item.path}
                       onClick={() => setMobileOpen(false)}
                       className={`px-4 py-2 rounded-md transition-colors ${
-                        pathname === item.path
+                        location.pathname === item.path
                           ? 'bg-primary text-primary-foreground'
                           : 'hover:bg-muted'
                       }`}

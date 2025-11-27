@@ -14,12 +14,6 @@ output
 *.local
 package-lock.json
 
-# Next.js
-/.next/
-/out/
-next-env.d.ts
-.vercel
-
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -27,7 +21,7 @@ next-env.d.ts
 .DS_Store
 *.suo
 *.ntvs*
-*.njsproj*
+*.njsproj
 *.sln
 *.sw?
 .sync
