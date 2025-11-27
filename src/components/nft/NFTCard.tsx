@@ -1,6 +1,5 @@
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import type { NFTWithArtist } from '@/types/types';
 import { Link } from 'react-router-dom';
 
@@ -28,12 +27,8 @@ export function NFTCard({ nft }: NFTCardProps) {
             </p>
           )}
           {nft.artist && (
-            <div className="flex items-center gap-2 mb-3">
-              <Avatar className="w-6 h-6">
-                <AvatarImage src={nft.artist.profile_image || ''} alt={nft.artist.name} />
-                <AvatarFallback>{nft.artist.name.charAt(0)}</AvatarFallback>
-              </Avatar>
-              <span className="text-sm text-muted-foreground">{nft.artist.name}</span>
+            <div className="mb-3">
+              <span className="text-sm text-muted-foreground">by {nft.artist.name}</span>
             </div>
           )}
         </CardContent>

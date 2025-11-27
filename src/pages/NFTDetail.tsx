@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { nftApi } from '@/db/api';
@@ -95,25 +94,30 @@ export default function NFTDetail() {
               <Card className="mb-6">
                 <CardContent className="p-6">
                   <p className="text-sm text-muted-foreground mb-3">Creator</p>
-                  <div className="flex items-center gap-3">
-                    <Avatar className="w-12 h-12">
-                      <AvatarImage src={nft.artist.profile_image || ''} alt={nft.artist.name} />
-                      <AvatarFallback>{nft.artist.name.charAt(0)}</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <p className="font-semibold">{nft.artist.name}</p>
-                      {nft.artist.wallet_address && (
-                        <p className="text-sm text-muted-foreground font-mono">
-                          {nft.artist.wallet_address.slice(0, 6)}...
-                          {nft.artist.wallet_address.slice(-4)}
-                        </p>
-                      )}
-                    </div>
+                  <div>
+                    <p className="font-semibold text-xl mb-2">{nft.artist.name}</p>
+                    {nft.artist.wallet_address && (
+                      <p className="text-sm text-muted-foreground font-mono mb-3">
+                        {nft.artist.wallet_address.slice(0, 6)}...
+                        {nft.artist.wallet_address.slice(-4)}
+                      </p>
+                    )}
+                    {nft.artist.website && (
+                      <a
+                        href={nft.artist.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-primary hover:underline text-sm flex items-center gap-1"
+                      >
+                        Visit Artist Website
+                        <ExternalLink className="h-3 w-3" />
+                      </a>
+                    )}
                   </div>
                   {nft.artist.bio && (
                     <>
                       <Separator className="my-4" />
-                      <p className="text-sm text-muted-foreground">{nft.artist.bio}</p>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{nft.artist.bio}</p>
                     </>
                   )}
                 </CardContent>
