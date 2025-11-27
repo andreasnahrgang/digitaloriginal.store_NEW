@@ -10,57 +10,73 @@ All colors MUST be HSL.
 @layer base {
   :root {
     --radius: 0.5rem;
+    /* Pure White Background for Light Mode */
     --background: 0 0% 100%;
     --foreground: 0 0% 0%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 0%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 0%;
+    /* Cyan Primary Color (#00bcd4) */
     --primary: 187 100% 42%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 15%;
+    /* Black Secondary */
+    --secondary: 0 0% 0%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 40%;
+    /* White Muted */
+    --muted: 0 0% 100%;
+    --muted-foreground: 0 0% 0%;
+    /* Cyan Accent */
     --accent: 187 100% 42%;
     --accent-foreground: 0 0% 0%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
+    /* Cyan Border */
     --border: 187 100% 42%;
-    --input: 0 0% 90%;
+    --input: 0 0% 100%;
+    /* Cyan Ring */
     --ring: 187 100% 42%;
     --chart-1: 187 100% 42%;
-    --chart-2: 187 80% 35%;
-    --chart-3: 187 60% 28%;
-    --chart-4: 187 40% 21%;
-    --chart-5: 187 20% 14%;
+    --chart-2: 187 100% 42%;
+    --chart-3: 187 100% 42%;
+    --chart-4: 187 100% 42%;
+    --chart-5: 187 100% 42%;
   }
 
   .dark {
+    /* Pure Black Background for Dark Mode */
     --background: 0 0% 0%;
     --foreground: 0 0% 100%;
-    --card: 0 0% 5%;
+    /* Pure Black Card Background */
+    --card: 0 0% 0%;
     --card-foreground: 0 0% 100%;
-    --popover: 0 0% 5%;
+    /* Pure Black Popover */
+    --popover: 0 0% 0%;
     --popover-foreground: 0 0% 100%;
+    /* Cyan Primary Color (#00bcd4) */
     --primary: 187 100% 42%;
     --primary-foreground: 0 0% 0%;
-    --secondary: 0 0% 15%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 60%;
+    /* White Secondary */
+    --secondary: 0 0% 100%;
+    --secondary-foreground: 0 0% 0%;
+    /* Black Muted */
+    --muted: 0 0% 0%;
+    --muted-foreground: 0 0% 100%;
+    /* Cyan Accent */
     --accent: 187 100% 42%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 100%;
+    /* Cyan Border */
     --border: 187 100% 42%;
-    --input: 0 0% 15%;
+    --input: 0 0% 0%;
+    /* Cyan Ring */
     --ring: 187 100% 42%;
     --chart-1: 187 100% 42%;
-    --chart-2: 187 80% 35%;
-    --chart-3: 187 60% 28%;
-    --chart-4: 187 40% 21%;
-    --chart-5: 187 20% 14%;
+    --chart-2: 187 100% 42%;
+    --chart-3: 187 100% 42%;
+    --chart-4: 187 100% 42%;
+    --chart-5: 187 100% 42%;
   }
 }
 
