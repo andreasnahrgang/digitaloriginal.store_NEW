@@ -1,51 +1,103 @@
-import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import routes from "../../routes";
+import { Link, useLocation } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  navigationMenuTriggerStyle,
+} from '@/components/ui/navigation-menu';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Menu, Wallet } from 'lucide-react';
+import { useState } from 'react';
+import { toast } from 'sonner';
 
-const Header: React.FC = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+export default function Header() {
   const location = useLocation();
-  const navigation = routes.filter((route) => route.visible !== false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const navItems = [
+    { name: 'Home', path: '/' },
+    { name: 'Marketplace', path: '/marketplace' },
+    { name: 'About Us', path: '/about' },
+    { name: 'Resources', path: '/resources' },
+    { name: 'FAQ', path: '/faq' },
+    { name: 'Contact', path: '/contact' },
+  ];
+
+  const handleConnectWallet = () => {
+    toast.info('Wallet Connection', {
+      description: 'ThirdWeb wallet integration required for this feature',
+    });
+  };
 
   return (
-    <header className="bg-white shadow-md sticky top-0 z-10">
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex items-center">
-            <Link to="/" className="flex-shrink-0 flex items-center">
-              {/* Please replace with your website logo */}
-              <img
-                className="h-8 w-auto"
-                src={`https://miaoda-site-img.cdn.bcebos.com/placeholder/code_logo_default.png`}
-                alt="Website logo"
-              />
-              {/* Please replace with your website name */}
-              <span className="ml-2 text-xl font-bold text-blue-600">
-                Website Name
-              </span>
-            </Link>
-          </div>
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="flex h-16 items-center justify-between">
+          <Link to="/" className="flex items-center gap-2">
+            <img
+              src="https://miaoda-conversation-file.s3cdn.medo.dev/user-7uiwbqz6q8lc/conv-7uja2c23lczk/20251127/file-7ujeylhhucjk.png"
+              alt="Digital Original"
+              className="h-8"
+            />
+          </Link>
 
-          {/* When there's only one page, you can remove the entire navigation section */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navigation.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`px-3 py-2 text-base font-medium rounded-md ${
-                  location.pathname === item.path
-                    ? "text-blue-600 bg-blue-50"
-                    : "text-gray-700 hover:text-blue-600 hover:bg-gray-50"
-                } transition duration-300`}
-              >
-                {item.name}
-              </Link>
-            ))}
+          <NavigationMenu className="hidden lg:flex">
+            <NavigationMenuList>
+              {navItems.map((item) => (
+                <NavigationMenuItem key={item.path}>
+                  <Link to={item.path}>
+                    <NavigationMenuLink
+                      className={navigationMenuTriggerStyle()}
+                      active={location.pathname === item.path}
+                    >
+                      {item.name}
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
+              ))}
+            </NavigationMenuList>
+          </NavigationMenu>
+
+          <div className="flex items-center gap-4">
+            <Button onClick={handleConnectWallet} className="hidden md:flex">
+              <Wallet className="mr-2 h-4 w-4" />
+              Connect Wallet
+            </Button>
+
+            <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+              <SheetTrigger asChild className="lg:hidden">
+                <Button variant="ghost" size="icon">
+                  <Menu className="h-5 w-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-64">
+                <nav className="flex flex-col gap-4 mt-8">
+                  {navItems.map((item) => (
+                    <Link
+                      key={item.path}
+                      to={item.path}
+                      onClick={() => setMobileOpen(false)}
+                      className={`px-4 py-2 rounded-md transition-colors ${
+                        location.pathname === item.path
+                          ? 'bg-primary text-primary-foreground'
+                          : 'hover:bg-muted'
+                      }`}
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                  <Button onClick={handleConnectWallet} className="mt-4">
+                    <Wallet className="mr-2 h-4 w-4" />
+                    Connect Wallet
+                  </Button>
+                </nav>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
-      </nav>
+      </div>
     </header>
   );
-};
-
-export default Header;
+}

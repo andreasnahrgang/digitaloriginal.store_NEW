@@ -1,71 +1,91 @@
-import React from "react";
+import { Link } from 'react-router-dom';
 
-const Footer: React.FC = () => {
+export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-gradient-to-r from-amber-50 to-orange-50 border-t border-amber-200">
-      <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* ================= About Us ================= */}
+    <footer className="border-t border-border bg-card">
+      <div className="max-w-7xl mx-auto py-12 px-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            {/* Title: Change to your project's "About Us" */}
-            <h3 className="text-lg font-semibold text-amber-800 mb-4">
-              {/* About Us */}
-            </h3>
-            <p className="text-gray-600">
-              {/* Fill in your "About Us" introduction here, for example: Committed to xxx, making xxx more xxx */}
+            <img
+              src="https://miaoda-conversation-file.s3cdn.medo.dev/user-7uiwbqz6q8lc/conv-7uja2c23lczk/20251127/file-7ujeylhhucjk.png"
+              alt="Digital Original"
+              className="h-8 mb-4"
+            />
+            <p className="text-sm text-muted-foreground">
+              Discover, collect, and trade extraordinary NFTs from talented artists worldwide.
             </p>
           </div>
 
-          {/* ================= Contact Information ================= */}
           <div>
-            {/* Title: Contact Information */}
-            <h3 className="text-lg font-semibold text-amber-800 mb-4">
-              {/* Contact Information */}
-            </h3>
-            <div className="text-gray-600 space-y-2">
-              <p>
-                {/* Address: XXX Street, XXX District, XXX City, XXX Province */}
-              </p>
-              <p>
-                {/* Phone: 010-XXXXXXX */}
-              </p>
-              <p>
-                {/* Email: info@example.com */}
-              </p>
-            </div>
+            <h3 className="font-semibold mb-4">Marketplace</h3>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>
+                <Link to="/marketplace" className="hover:text-primary transition-colors">
+                  Browse NFTs
+                </Link>
+              </li>
+              <li>
+                <Link to="/marketplace" className="hover:text-primary transition-colors">
+                  Featured Artists
+                </Link>
+              </li>
+              <li>
+                <Link to="/marketplace" className="hover:text-primary transition-colors">
+                  New Releases
+                </Link>
+              </li>
+            </ul>
           </div>
 
-          {/* ================= Business Hours / Other Information / Can be deleted ================= */}
           <div>
-            {/* Title: Can be changed to "Business Hours" or "Service Hours" */}
-            <h3 className="text-lg font-semibold text-amber-800 mb-4">
-              {/* Business Hours */}
-            </h3>
-            <div className="text-gray-600 space-y-2">
-              <p>
-                {/* Monday to Friday: 9:00-18:00 */}
-              </p>
-              <p>
-                {/* Please check announcements for weekends and public holidays */}
-              </p>
-              <p>
-                {/* Other notes, such as "Advance booking required" */}
-              </p>
-            </div>
+            <h3 className="font-semibold mb-4">Resources</h3>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>
+                <Link to="/resources" className="hover:text-primary transition-colors">
+                  Documentation
+                </Link>
+              </li>
+              <li>
+                <Link to="/faq" className="hover:text-primary transition-colors">
+                  FAQ
+                </Link>
+              </li>
+              <li>
+                <Link to="/about" className="hover:text-primary transition-colors">
+                  About Us
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="font-semibold mb-4">Connect</h3>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>
+                <Link to="/contact" className="hover:text-primary transition-colors">
+                  Contact Us
+                </Link>
+              </li>
+              <li>
+                <a href="#" className="hover:text-primary transition-colors">
+                  Twitter
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-primary transition-colors">
+                  Discord
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
 
-        {/* ================= Copyright Section ================= */}
-        <div className="mt-8 pt-8 border-t border-amber-200 text-center text-gray-600">
-          <p>
-            {/* © {currentYear} Your Company or Organization Name */}
-          </p>
+        <div className="mt-8 pt-8 border-t border-border text-center text-sm text-muted-foreground">
+          <p>{currentYear} NFT Marketplace</p>
         </div>
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}
