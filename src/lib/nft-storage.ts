@@ -2,18 +2,19 @@ import { NFTStorage, File, Blob } from "nft.storage";
 
 const NFT_STORAGE_TOKEN = process.env.NFT_STORAGE_API_KEY!;
 
-if (!NFT_STORAGE_TOKEN) {
-  throw new Error(
-    "NFT_STORAGE_API_KEY is required. Get one at https://nft.storage"
-  );
-}
+// Helper to check if token is configured
+export const isNFTStorageConfigured = () => !!NFT_STORAGE_TOKEN;
 
-const client = new NFTStorage({ token: NFT_STORAGE_TOKEN });
+const getClient = () => {
+  if (!NFT_STORAGE_TOKEN) {
+    throw new Error("NFT_STORAGE_API_KEY is not configured in .env");
+  }
+  return new NFTStorage({ token: NFT_STORAGE_TOKEN });
+};
 
 export interface NFTMetadata {
   name: string;
   description: string;
-  artist: string;
   image?: string;
   properties?: Record<string, any>;
   attributes?: Array<{ trait_type: string; value: string | number }>;
@@ -24,43 +25,43 @@ export interface UploadResult {
   metadataCID: string;
   imageURL: string;
   metadataURL: string;
+  gatewayURL: string;
 }
 
 /**
  * Upload an NFT image and metadata to IPFS via NFT.Storage (FREE)
- *
- * @param imageFile - The image file to upload
- * @param metadata - NFT metadata (ERC-721 compatible)
- * @returns IPFS CIDs and gateway URLs
  */
 export async function uploadNFTToIPFS(
   imageFile: File | Blob,
   metadata: NFTMetadata
 ): Promise<UploadResult> {
+  const client = getClient();
+
   try {
     console.log("📤 Uploading image to IPFS...");
 
-    // Upload image to IPFS
+    // 1. Upload image blob directly to get CID
     const imageCID = await client.storeBlob(imageFile);
     const imageIPFS = `ipfs://${imageCID}`;
+    const imageGateway = `https://nftstorage.link/ipfs/${imageCID}`;
 
     console.log(`✅ Image uploaded: ${imageIPFS}`);
 
-    // Create ERC-721 compatible metadata
+    // 2. Create ERC-721 compatible metadata
     const nftMetadata = {
       name: metadata.name,
       description: metadata.description,
-      image: imageIPFS,
+      image: imageIPFS, // Standard requires ipfs:// URI
       properties: {
-        artist: metadata.artist,
         ...metadata.properties,
+        image_gateway: imageGateway, // Helpful for frontend
       },
       attributes: metadata.attributes || [],
     };
 
     console.log("📤 Uploading metadata to IPFS...");
 
-    // Upload metadata JSON to IPFS
+    // 3. Upload metadata JSON
     const metadataBlob = new Blob([JSON.stringify(nftMetadata)], {
       type: "application/json",
     });
@@ -72,8 +73,9 @@ export async function uploadNFTToIPFS(
     return {
       imageCID: imageIPFS,
       metadataCID: metadataIPFS,
-      imageURL: `https://nftstorage.link/ipfs/${imageCID}`,
-      metadataURL: `https://nftstorage.link/ipfs/${metadataCID}`,
+      imageURL: imageIPFS,
+      metadataURL: metadataIPFS,
+      gatewayURL: `https://nftstorage.link/ipfs/${metadataCID}`,
     };
   } catch (error) {
     console.error("❌ IPFS upload failed:", error);
@@ -82,35 +84,13 @@ export async function uploadNFTToIPFS(
 }
 
 /**
- * Upload just an image to IPFS (for thumbnails, avatars, etc.)
- */
-export async function uploadImageToIPFS(
-  imageFile: File | Blob
-): Promise<string> {
-  try {
-    const cid = await client.storeBlob(imageFile);
-    return `ipfs://${cid}`;
-  } catch (error) {
-    console.error("❌ Image upload failed:", error);
-    throw error;
-  }
-}
-
-/**
  * Convert IPFS URI to HTTP gateway URL
  */
 export function ipfsToHTTP(ipfsURI: string): string {
-  if (!ipfsURI.startsWith("ipfs://")) {
-    return ipfsURI;
-  }
+  if (!ipfsURI) return "";
+  if (ipfsURI.startsWith("http")) return ipfsURI;
 
+  // Handle ipfs:// prefix
   const cid = ipfsURI.replace("ipfs://", "");
   return `https://nftstorage.link/ipfs/${cid}`;
-}
-
-/**
- * Check if NFT.Storage is properly configured
- */
-export function checkNFTStorageConfig(): boolean {
-  return !!NFT_STORAGE_TOKEN;
 }
