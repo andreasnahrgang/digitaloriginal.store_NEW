@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
@@ -71,11 +72,16 @@ export default function NFTDetail() {
         <div className="grid lg:grid-cols-2 gap-8">
           <div>
             <Card className="overflow-hidden">
-              <img
-                src={nft.image_url}
-                alt={nft.title}
-                className="w-full aspect-square object-cover"
-              />
+              <div className="aspect-square relative">
+                <Image
+                  src={nft.image_url}
+                  alt={nft.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  priority
+                />
+              </div>
             </Card>
           </div>
 

@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -34,10 +35,13 @@ export default function Home() {
       <section className="relative py-20 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <img
+            <Image
               src="https://miaoda-conversation-file.s3cdn.medo.dev/user-7uiwbqz6q8lc/conv-7uja2c23lczk/20251127/file-7ujeylhhucjk.png"
               alt="Digital Original"
-              className="h-16 mx-auto mb-8"
+              width={200}
+              height={64}
+              className="h-16 w-auto mx-auto mb-8"
+              priority
             />
             <h1 className="text-5xl xl:text-6xl font-bold mb-6">
               Discover Unique Digital Art
@@ -72,12 +76,13 @@ export default function Home() {
                     <CarouselItem key={nft.id} className="md:basis-1/2 lg:basis-1/3">
                       <Link href="/marketplace" className="block">
                         <div className="group relative overflow-hidden rounded-lg border border-border transition-all hover:shadow-lg hover:shadow-primary/20">
-                          <div className="aspect-square overflow-hidden">
-                            <img
+                          <div className="aspect-square overflow-hidden relative">
+                            <Image
                               src={nft.image_url}
                               alt={nft.title}
-                              className="w-full h-full object-cover transition-transform group-hover:scale-105"
-                              loading="lazy"
+                              fill
+                              className="object-cover transition-transform group-hover:scale-105"
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             />
                           </div>
                           <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
