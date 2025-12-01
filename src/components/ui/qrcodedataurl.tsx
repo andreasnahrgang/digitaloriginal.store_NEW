@@ -11,6 +11,7 @@
  * }
  */
 
+import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import QRCode from 'qrcode';
 
@@ -81,7 +82,7 @@ const QRCodeDataUrl: React.FC<QRCodeDataUrlProps> = ({
   return (
     <div className={`qr-code-container ${className}`}>
       {dataUrl ? (
-        <img
+        <Image
           src={dataUrl}
           alt={`QR Code: ${text}`}
           width={width}
