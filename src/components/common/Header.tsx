@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
@@ -39,10 +40,13 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <img
+            <Image
               src="https://miaoda-conversation-file.s3cdn.medo.dev/user-7uiwbqz6q8lc/conv-7uja2c23lczk/20251127/file-7ujeylhhucjk.png"
               alt="Digital Original"
-              className="h-8"
+              width={150}
+              height={32}
+              className="h-8 w-auto"
+              priority
             />
           </Link>
 
@@ -82,11 +86,10 @@ export default function Header() {
                       key={item.path}
                       href={item.path}
                       onClick={() => setMobileOpen(false)}
-                      className={`px-4 py-2 rounded-md transition-colors ${
-                        pathname === item.path
-                          ? 'bg-primary text-primary-foreground'
-                          : 'hover:bg-muted'
-                      }`}
+                      className={`px-4 py-2 rounded-md transition-colors ${pathname === item.path
+                        ? 'bg-primary text-primary-foreground'
+                        : 'hover:bg-muted'
+                        }`}
                     >
                       {item.name}
                     </Link>

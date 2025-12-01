@@ -1,5 +1,4 @@
-'use client';
-
+import Image from 'next/image';
 import Link from 'next/link';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -13,12 +12,13 @@ export function NFTCard({ nft }: NFTCardProps) {
   return (
     <Link href={`/nft/${nft.id}`}>
       <Card className="group overflow-hidden transition-all hover:shadow-lg hover:shadow-primary/20 cursor-pointer">
-        <div className="aspect-square overflow-hidden">
-          <img
+        <div className="aspect-square overflow-hidden relative">
+          <Image
             src={nft.image_url}
             alt={nft.title}
-            className="w-full h-full object-cover transition-transform group-hover:scale-105"
-            loading="lazy"
+            fill
+            className="object-cover transition-transform group-hover:scale-105"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>
         <CardContent className="p-4">
