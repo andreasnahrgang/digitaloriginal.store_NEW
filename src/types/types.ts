@@ -1,13 +1,18 @@
 export interface Artist {
   id: string;
   name: string;
-  bio: string | null;
-  profile_image: string | null;
-  wallet_address: string | null;
-  website: string | null;
-  social_links: Record<string, string>;
+  slug: string;
+  bio: string;
+  avatar_url: string;
+  profile_image?: string; // Legacy/Optional
+  wallet_address?: string; // Legacy/Optional
+  website?: string;
+  social_links?: {
+    twitter?: string;
+    instagram?: string;
+  };
   created_at: string;
-  updated_at: string;
+  updated_at?: string;
 }
 
 export interface NFT {
@@ -18,13 +23,13 @@ export interface NFT {
   image_url: string;
   ipfs_hash: string | null;
   price: number | null;
-  token_id: string | null;
-  contract_address: string | null;
+  token_id?: string | null; // Legacy/Optional
+  contract_address?: string | null; // Legacy/Optional
   is_listed: boolean;
-  metadata: Record<string, unknown>;
-  file_size: number | null;
+  metadata?: Record<string, unknown>; // Legacy/Optional
+  file_size?: number | null; // Legacy/Optional
   created_at: string;
-  updated_at: string;
+  updated_at?: string; // Legacy/Optional
 }
 
 export interface NFTWithArtist extends NFT {

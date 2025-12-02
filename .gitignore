@@ -33,3 +33,5 @@ next-env.d.ts
 .sync
 history/*.json
 .vite_cache
+.env
+.env

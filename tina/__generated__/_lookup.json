@@ -1,0 +1,44 @@
+{
+  "DocumentConnection": {
+    "type": "DocumentConnection",
+    "resolveType": "multiCollectionDocumentList",
+    "collections": ["nft", "artist"]
+  },
+  "Node": { "type": "Node", "resolveType": "nodeDocument" },
+  "DocumentNode": {
+    "type": "DocumentNode",
+    "resolveType": "multiCollectionDocument",
+    "createDocument": "create",
+    "updateDocument": "update"
+  },
+  "NftArtist": {
+    "type": "NftArtist",
+    "resolveType": "multiCollectionDocument",
+    "createDocument": "create",
+    "updateDocument": "update"
+  },
+  "Nft": {
+    "type": "Nft",
+    "resolveType": "collectionDocument",
+    "collection": "nft",
+    "createNft": "create",
+    "updateNft": "update"
+  },
+  "NftConnection": {
+    "type": "NftConnection",
+    "resolveType": "collectionDocumentList",
+    "collection": "nft"
+  },
+  "Artist": {
+    "type": "Artist",
+    "resolveType": "collectionDocument",
+    "collection": "artist",
+    "createArtist": "create",
+    "updateArtist": "update"
+  },
+  "ArtistConnection": {
+    "type": "ArtistConnection",
+    "resolveType": "collectionDocumentList",
+    "collection": "artist"
+  }
+}
