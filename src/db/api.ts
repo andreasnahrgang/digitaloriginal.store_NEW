@@ -1,182 +1,138 @@
-import { supabase } from './supabase';
-import type { Artist, NFT, NFTWithArtist } from '@/types/types';
+import { client } from "@/lib/tina-client";
+import type { Artist, NFT, NFTWithArtist } from "@/types/types";
+
+// Helper to map TinaCMS response to our app types
+const mapTinaNFT = (tinaNft: any): NFTWithArtist => {
+  const node = tinaNft.node || tinaNft;
+  return {
+    id: node.id,
+    title: node.title,
+    description: node.body ? JSON.stringify(node.body) : "",
+    price: node.price,
+    image_url: node.image_ipfs, // We use IPFS url as image_url
+    ipfs_hash: node.image_ipfs.replace("ipfs://", ""),
+    artist_id: node.artist?.id || "",
+    created_at: new Date().toISOString(), // Placeholder
+    is_listed: node.is_listed,
+    artist: node.artist
+      ? {
+          id: node.artist.id,
+          name: node.artist.name,
+          slug: node.artist.slug,
+          avatar_url: node.artist.avatar,
+          bio: node.artist.bio_short,
+          created_at: new Date().toISOString(),
+        }
+      : null,
+  };
+};
 
 export const nftApi = {
   async getAllNFTs(): Promise<NFTWithArtist[]> {
-    const { data, error } = await supabase
-      .from('nfts')
-      .select(`
-        *,
-        artist:artists(*)
-      `)
-      .eq('is_listed', true)
-      .order('created_at', { ascending: false });
-
-    if (error) {
-      console.error('Error fetching NFTs:', error);
+    try {
+      const response = await client.queries.nftConnection();
+      return response.data.nftConnection.edges?.map(mapTinaNFT) || [];
+    } catch (error) {
+      console.error("Error fetching NFTs from TinaCMS:", error);
       return [];
     }
-
-    return Array.isArray(data) ? data : [];
   },
 
   async getNFTById(id: string): Promise<NFTWithArtist | null> {
-    const { data, error } = await supabase
-      .from('nfts')
-      .select(`
-        *,
-        artist:artists(*)
-      `)
-      .eq('id', id)
-      .maybeSingle();
-
-    if (error) {
-      console.error('Error fetching NFT:', error);
+    try {
+      // TinaCMS IDs are file paths usually, but we might need to search by slug or filename
+      // For now, let's assume we fetch all and find (optimization needed later)
+      const response = await client.queries.nftConnection();
+      const nfts = response.data.nftConnection.edges?.map(mapTinaNFT) || [];
+      return (
+        nfts.find(
+          (n) => n.id === id || n.title.toLowerCase().replace(/ /g, "-") === id
+        ) || null
+      );
+    } catch (error) {
+      console.error("Error fetching NFT:", error);
       return null;
     }
-
-    return data;
   },
 
   async getFeaturedNFTs(limit = 6): Promise<NFTWithArtist[]> {
-    const { data, error } = await supabase
-      .from('nfts')
-      .select(`
-        *,
-        artist:artists(*)
-      `)
-      .eq('is_listed', true)
-      .order('created_at', { ascending: false })
-      .limit(limit);
-
-    if (error) {
-      console.error('Error fetching featured NFTs:', error);
-      return [];
-    }
-
-    return Array.isArray(data) ? data : [];
+    const all = await this.getAllNFTs();
+    return all.slice(0, limit);
   },
 
   async getNFTsByArtist(artistId: string): Promise<NFT[]> {
-    const { data, error } = await supabase
-      .from('nfts')
-      .select('*')
-      .eq('artist_id', artistId)
-      .eq('is_listed', true)
-      .order('created_at', { ascending: false });
-
-    if (error) {
-      console.error('Error fetching artist NFTs:', error);
-      return [];
-    }
-
-    return Array.isArray(data) ? data : [];
+    const all = await this.getAllNFTs();
+    return all.filter(
+      (n) => n.artist?.id === artistId || n.artist?.slug === artistId
+    );
   },
 
+  // Write operations are now handled via TinaCMS Admin, so these return null/false
   async createNFT(nft: Partial<NFT>): Promise<NFT | null> {
-    const { data, error } = await supabase
-      .from('nfts')
-      .insert([nft])
-      .select()
-      .maybeSingle();
-
-    if (error) {
-      console.error('Error creating NFT:', error);
-      return null;
-    }
-
-    return data;
+    console.warn("createNFT is deprecated. Use TinaCMS Admin.");
+    return null;
   },
 
   async updateNFT(id: string, updates: Partial<NFT>): Promise<NFT | null> {
-    const { data, error } = await supabase
-      .from('nfts')
-      .update({ ...updates, updated_at: new Date().toISOString() })
-      .eq('id', id)
-      .select()
-      .maybeSingle();
-
-    if (error) {
-      console.error('Error updating NFT:', error);
-      return null;
-    }
-
-    return data;
+    console.warn("updateNFT is deprecated. Use TinaCMS Admin.");
+    return null;
   },
 
   async deleteNFT(id: string): Promise<boolean> {
-    const { error } = await supabase
-      .from('nfts')
-      .delete()
-      .eq('id', id);
-
-    if (error) {
-      console.error('Error deleting NFT:', error);
-      return false;
-    }
-
-    return true;
-  }
+    console.warn("deleteNFT is deprecated. Use TinaCMS Admin.");
+    return false;
+  },
 };
 
 export const artistApi = {
   async getAllArtists(): Promise<Artist[]> {
-    const { data, error } = await supabase
-      .from('artists')
-      .select('*')
-      .order('created_at', { ascending: false });
-
-    if (error) {
-      console.error('Error fetching artists:', error);
+    try {
+      const response = await client.queries.artistConnection();
+      return (
+        response.data.artistConnection.edges?.map((edge: any) => ({
+          id: edge.node.id,
+          name: edge.node.name,
+          slug: edge.node.slug,
+          avatar_url: edge.node.avatar,
+          bio: edge.node.bio_short,
+          created_at: new Date().toISOString(),
+        })) || []
+      );
+    } catch (error) {
+      console.error("Error fetching artists:", error);
       return [];
     }
-
-    return Array.isArray(data) ? data : [];
   },
 
   async getArtistById(id: string): Promise<Artist | null> {
-    const { data, error } = await supabase
-      .from('artists')
-      .select('*')
-      .eq('id', id)
-      .maybeSingle();
-
-    if (error) {
-      console.error('Error fetching artist:', error);
+    try {
+      const response = await client.queries.artistConnection();
+      const artists =
+        response.data.artistConnection.edges?.map((edge: any) => ({
+          id: edge.node.id,
+          name: edge.node.name,
+          slug: edge.node.slug,
+          avatar_url: edge.node.avatar,
+          bio: edge.node.bio_short,
+          created_at: new Date().toISOString(),
+        })) || [];
+      return artists.find((a: any) => a.id === id || a.slug === id) || null;
+    } catch (error) {
+      console.error("Error fetching artist:", error);
       return null;
     }
-
-    return data;
   },
 
   async createArtist(artist: Partial<Artist>): Promise<Artist | null> {
-    const { data, error } = await supabase
-      .from('artists')
-      .insert([artist])
-      .select()
-      .maybeSingle();
-
-    if (error) {
-      console.error('Error creating artist:', error);
-      return null;
-    }
-
-    return data;
+    console.warn("createArtist is deprecated. Use TinaCMS Admin.");
+    return null;
   },
 
-  async updateArtist(id: string, updates: Partial<Artist>): Promise<Artist | null> {
-    const { data, error } = await supabase
-      .from('artists')
-      .update({ ...updates, updated_at: new Date().toISOString() })
-      .eq('id', id)
-      .select()
-      .maybeSingle();
-
-    if (error) {
-      console.error('Error updating artist:', error);
-      return null;
-    }
-
-    return data;
-  }
+  async updateArtist(
+    id: string,
+    updates: Partial<Artist>
+  ): Promise<Artist | null> {
+    console.warn("updateArtist is deprecated. Use TinaCMS Admin.");
+    return null;
+  },
 };
