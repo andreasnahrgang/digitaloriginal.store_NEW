@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import { uploadNFTToIPFS, isNFTStorageConfigured } from "@/lib/nft-storage";
 import { Button } from "@/components/ui/button";

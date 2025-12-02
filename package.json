@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "scripts": {
     "dev": "tinacms dev -c \"next dev\"",
-    "build": "tinacms build && next build",
+    "build": "tinacms build --local --skip-cloud-checks --datalayer-port 9001 && next build",
     "start": "next start",
     "lint": "next lint",
     "version:patch": "npm version patch -m 'chore(release): bump to v%s'",
@@ -39,7 +39,7 @@
     "@radix-ui/react-toggle": "^1.1.10",
     "@radix-ui/react-toggle-group": "^1.1.11",
     "@radix-ui/react-tooltip": "^1.2.8",
-    "@supabase/supabase-js": "^2.86.0",
+    "@tinacms/cli": "^2.0.0",
     "axios": "^1.13.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -70,6 +70,7 @@
     "streamdown": "^1.4.0",
     "tailwind-merge": "^3.3.1",
     "tailwindcss-animate": "^1.0.7",
+    "tinacms": "^3.0.0",
     "vaul": "^1.1.2",
     "video-react": "^0.16.0",
     "zod": "^3.25.76"

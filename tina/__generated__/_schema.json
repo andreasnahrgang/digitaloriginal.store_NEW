@@ -1,0 +1,177 @@
+{
+  "version": {
+    "fullVersion": "2.0.0",
+    "major": "2",
+    "minor": "0",
+    "patch": "0"
+  },
+  "meta": { "flags": ["experimentalData"] },
+  "collections": [
+    {
+      "name": "nft",
+      "label": "NFTs",
+      "path": "content/nfts",
+      "format": "mdx",
+      "ui": { "filename": {} },
+      "fields": [
+        {
+          "type": "string",
+          "name": "title",
+          "label": "Title",
+          "isTitle": true,
+          "required": true,
+          "namespace": ["nft", "title"],
+          "searchable": true,
+          "uid": false
+        },
+        {
+          "type": "reference",
+          "name": "artist",
+          "label": "Artist",
+          "collections": ["artist"],
+          "required": true,
+          "namespace": ["nft", "artist"],
+          "searchable": true,
+          "uid": false
+        },
+        {
+          "type": "number",
+          "name": "price",
+          "label": "Price (ETH)",
+          "required": true,
+          "namespace": ["nft", "price"],
+          "searchable": true,
+          "uid": false
+        },
+        {
+          "type": "string",
+          "name": "image_ipfs",
+          "label": "IPFS Image URL",
+          "description": "ipfs://...",
+          "required": true,
+          "namespace": ["nft", "image_ipfs"],
+          "searchable": true,
+          "uid": false
+        },
+        {
+          "type": "string",
+          "name": "thumbnail_ipfs",
+          "label": "IPFS Thumbnail URL",
+          "description": "ipfs://...",
+          "namespace": ["nft", "thumbnail_ipfs"],
+          "searchable": true,
+          "uid": false
+        },
+        {
+          "type": "boolean",
+          "name": "is_listed",
+          "label": "Listed for Sale",
+          "namespace": ["nft", "is_listed"],
+          "searchable": true,
+          "uid": false
+        },
+        {
+          "type": "string",
+          "name": "category",
+          "label": "Category",
+          "options": ["Digital Art", "Photography", "3D", "Mixed Media"],
+          "namespace": ["nft", "category"],
+          "searchable": true,
+          "uid": false
+        },
+        {
+          "type": "rich-text",
+          "name": "body",
+          "label": "Description",
+          "isBody": true,
+          "namespace": ["nft", "body"],
+          "searchable": true,
+          "parser": { "type": "mdx" },
+          "uid": false
+        }
+      ],
+      "namespace": ["nft"]
+    },
+    {
+      "name": "artist",
+      "label": "Artists",
+      "path": "content/artists",
+      "format": "mdx",
+      "fields": [
+        {
+          "type": "string",
+          "name": "name",
+          "label": "Name",
+          "isTitle": true,
+          "required": true,
+          "namespace": ["artist", "name"],
+          "searchable": true,
+          "uid": false
+        },
+        {
+          "type": "string",
+          "name": "slug",
+          "label": "Slug",
+          "required": true,
+          "namespace": ["artist", "slug"],
+          "searchable": true,
+          "uid": false
+        },
+        {
+          "type": "image",
+          "name": "avatar",
+          "label": "Avatar",
+          "namespace": ["artist", "avatar"],
+          "searchable": false,
+          "uid": false
+        },
+        {
+          "type": "string",
+          "name": "bio_short",
+          "label": "Short Bio",
+          "namespace": ["artist", "bio_short"],
+          "searchable": true,
+          "uid": false
+        },
+        {
+          "type": "string",
+          "name": "website",
+          "label": "Website",
+          "namespace": ["artist", "website"],
+          "searchable": true,
+          "uid": false
+        },
+        {
+          "type": "string",
+          "name": "twitter",
+          "label": "Twitter",
+          "namespace": ["artist", "twitter"],
+          "searchable": true,
+          "uid": false
+        },
+        {
+          "type": "string",
+          "name": "instagram",
+          "label": "Instagram",
+          "namespace": ["artist", "instagram"],
+          "searchable": true,
+          "uid": false
+        },
+        {
+          "type": "rich-text",
+          "name": "body",
+          "label": "Full Bio",
+          "isBody": true,
+          "namespace": ["artist", "body"],
+          "searchable": true,
+          "parser": { "type": "mdx" },
+          "uid": false
+        }
+      ],
+      "namespace": ["artist"]
+    }
+  ],
+  "config": {
+    "media": { "tina": { "publicFolder": "public", "mediaRoot": "uploads" } }
+  }
+}
