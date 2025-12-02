@@ -1,0 +1,47 @@
+fragment NftParts on Nft {
+  __typename
+  title
+  artist {
+    ... on Artist {
+      __typename
+      name
+      slug
+      avatar
+      bio_short
+      website
+      twitter
+      instagram
+      body
+    }
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+  }
+  price
+  image_ipfs
+  thumbnail_ipfs
+  is_listed
+  category
+  body
+}
+
+fragment ArtistParts on Artist {
+  __typename
+  name
+  slug
+  avatar
+  bio_short
+  website
+  twitter
+  instagram
+  body
+}
