@@ -1,6 +1,7 @@
 # Welcome to Your Miaoda Project
+
 Miaoda Application Link URL
-    URL:https://medo.dev/projects/app-7uja2c23lczl
+URL:https://medo.dev/projects/app-7uja2c23lczl
 
 # NFT Marketplace - Digital Original
 
@@ -11,6 +12,7 @@ A minimalist NFT marketplace built with modern web technologies, featuring a sle
 ## ✨ Features
 
 ### Core Functionality
+
 - **NFT Marketplace**: Browse and discover unique digital artworks
 - **Featured Carousel**: Rotating showcase of highlighted NFTs on the homepage
 - **Artist Profiles**: Detailed information about NFT creators
@@ -20,6 +22,7 @@ A minimalist NFT marketplace built with modern web technologies, featuring a sle
 - **Responsive Design**: Optimized for desktop, tablet, and mobile devices
 
 ### Pages
+
 - **Home**: Featured NFT carousel and marketplace preview
 - **Marketplace**: Full NFT gallery with search functionality
 - **NFT Detail**: Individual artwork pages with artist information
@@ -31,12 +34,14 @@ A minimalist NFT marketplace built with modern web technologies, featuring a sle
 ## 🎨 Design System
 
 ### Color Palette
+
 - **Background**: Pure Black (#000000)
 - **Text**: White (#FFFFFF)
 - **Accent**: Cyan (#00bcd4)
 - **Style**: Minimalist avant-garde with high contrast
 
 ### Visual Elements
+
 - Clean grid-based layouts
 - Card-style NFT displays with cyan borders
 - Smooth transitions and hover effects
@@ -46,6 +51,7 @@ A minimalist NFT marketplace built with modern web technologies, featuring a sle
 ## 🛠️ Technology Stack
 
 ### Frontend
+
 - **Framework**: Next.js 14 (App Router)
 - **Runtime**: React 18 with TypeScript
 - **UI Components**: shadcn/ui
@@ -53,13 +59,14 @@ A minimalist NFT marketplace built with modern web technologies, featuring a sle
 - **Icons**: Lucide React
 - **Carousel**: Embla Carousel
 
-### Backend & Database
-- **Database**: Supabase (PostgreSQL)
-- **Authentication**: Ready for ThirdWeb integration
-- **Storage**: Supabase Storage (ready for IPFS)
-- **API**: Supabase Client with TypeScript
+### Content Management
+
+- **CMS**: TinaCMS for content editing
+- **Content**: Markdown-based NFT and artist data
+- **Admin**: Built-in TinaCMS admin interface
 
 ### Blockchain (Ready for Integration)
+
 - **Wallet**: ThirdWeb SDK
 - **Storage**: IPFS via ThirdWeb/Pinata/Web3.Storage
 - **Smart Contracts**: ThirdWeb marketplace templates
@@ -94,16 +101,15 @@ A minimalist NFT marketplace built with modern web technologies, featuring a sle
 │   │   │   ├── NFTCarousel.tsx     # Homepage carousel
 │   │   │   └── NFTGrid.tsx         # Marketplace grid
 │   │   └── ui/                     # shadcn/ui components
-│   ├── db/
-│   │   ├── supabase.ts             # Supabase client
-│   │   └── api.ts                  # Database API functions
+│   ├── lib/
+│   │   └── utils.ts                # Utility functions
 │   ├── types/
 │   │   └── types.ts                # TypeScript definitions
 │   ├── lib/
 │   │   └── utils.ts                # Utility functions
 │   └── index.css                   # Global styles
-├── supabase/
-│   └── migrations/                 # Database migrations
+├── tina/
+│   └── config.ts                   # TinaCMS configuration
 ├── public/                         # Static assets
 ├── next.config.mjs                 # Next.js configuration
 ├── DEPLOYMENT_GUIDE.md             # Deployment instructions
@@ -113,40 +119,31 @@ A minimalist NFT marketplace built with modern web technologies, featuring a sle
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Node.js 18+ and npm
-- Supabase account
 - Git
 
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone <your-repo-url>
    cd app-7uja2c23lczl
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Set up environment variables**
-   
-   Create a `.env.local` file in the root directory:
-   ```env
-   NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-   NEXT_PUBLIC_APP_ID=your_app_id
-   ```
 
-4. **Set up Supabase database**
-   
-   Run the migrations in the `supabase/migrations/` directory:
-   - `20250127000000_create_artists_table.sql`
-   - `20250127000001_create_nfts_table.sql`
-   - `20250127000002_add_sample_data.sql`
+   Create a `.env` file in the root directory (refer to `.env.example`)
 
-5. **Start development server**
+4. **Start development server**
+
    ```bash
    npm run dev
    ```
@@ -158,84 +155,80 @@ A minimalist NFT marketplace built with modern web technologies, featuring a sle
 This Next.js application can be deployed to various platforms:
 
 ### Vercel (Recommended)
+
 ```bash
 npm i -g vercel
 vercel
 ```
 
 ### Netlify
+
 ```bash
 npm i -g netlify-cli
 netlify deploy --prod
 ```
 
 ### Docker
+
 See `DEPLOYMENT_GUIDE.md` for detailed instructions.
 
-For complete deployment instructions, see **[DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)**
+Deployment is managed via Vercel. See [GIT_STRATEGY.md](./GIT_STRATEGY.md) for branch and deployment workflow.
 
-## 📊 Database Schema
+## 📝 Content Management
 
-### Artists Table
-```sql
-- id (uuid, primary key)
-- name (text, required)
-- bio (text)
-- profile_image_url (text)
-- website (text)
-- social_links (jsonb)
-- created_at (timestamp)
-```
+### TinaCMS
 
-### NFTs Table
-```sql
-- id (uuid, primary key)
-- title (text, required)
-- description (text)
-- image_url (text, required)
-- price (numeric)
-- artist_id (uuid, foreign key)
-- is_listed (boolean)
-- metadata (jsonb)
-- created_at (timestamp)
-```
+Content is managed through TinaCMS with markdown files:
 
-## 🎯 Sample Data
+- **NFTs**: `content/nfts/*.mdx`
+- **Artists**: `content/artists/*.mdx`
+- **Admin Interface**: Access at `/admin` when running dev server
 
-The database includes sample data for demonstration:
+### Content Schema
+
+All content is version-controlled and stored as markdown files in the `content/` directory.
+
+## 🎯 Content
+
+Sample content is included in the `content/` directory:
 
 ### Artists
-- **Robert Zielasco**: Contemporary digital artist
-- **digitalgandhi**: Avant-garde digital creator
+
+- Artist profiles with bios and portfolio information
+- Managed via TinaCMS admin interface
 
 ### NFTs
-- 6 unique digital artworks with real images
-- Prices ranging from 0.5 to 2.5 ETH
-- Complete metadata and artist attribution
+
+- Digital artworks with metadata
+- Prices and descriptions
+- Complete artist attribution
 
 ## 🌐 Deployment
 
 ### Deploy to Vercel
 
 1. **Quick Deploy**
+
    ```bash
    npm install -g vercel
    vercel
    ```
 
 2. **Configure Environment Variables**
-   - Add `VITE_SUPABASE_URL`
-   - Add `VITE_SUPABASE_ANON_KEY`
+
+   - Add environment variables from `.env.example`
 
 3. **Deploy**
    ```bash
    vercel --prod
    ```
 
-For detailed deployment instructions, see [VERCEL_DEPLOYMENT.md](./VERCEL_DEPLOYMENT.md)
+For detailed deployment workflow, see [GIT_STRATEGY.md](./GIT_STRATEGY.md)
 
 ### Vercel Configuration
+
 The project includes a `vercel.json` file with:
+
 - Automatic Vite detection
 - SPA routing configuration
 - Build and output directory settings
@@ -259,6 +252,7 @@ npm run preview
 ```
 
 ### Code Quality
+
 - TypeScript for type safety
 - Biome for linting
 - Tailwind CSS for consistent styling
@@ -267,35 +261,42 @@ npm run preview
 ## 🔐 Security
 
 ### Environment Variables
+
 - Never commit `.env` files
 - Use Vercel's environment variable system
 - Rotate keys if exposed
 
-### Supabase Security
-- Row Level Security (RLS) enabled
-- Public read access for NFT browsing
-- Secure write operations (ready for auth)
+### Content Security
+
+- TinaCMS authentication for admin access
+- Version-controlled content via Git
+- Read-only public content access
 
 ## 🎨 Customization
 
 ### Update Colors
+
 Edit `src/index.css` to change the color scheme:
+
 ```css
 :root {
-  --background: 0 0% 0%;        /* Black */
-  --foreground: 0 0% 100%;      /* White */
-  --primary: 187 100% 42%;      /* Cyan */
+  --background: 0 0% 0%; /* Black */
+  --foreground: 0 0% 100%; /* White */
+  --primary: 187 100% 42%; /* Cyan */
   /* ... other colors */
 }
 ```
 
 ### Add New Pages
+
 1. Create component in `src/pages/`
 2. Add route in `src/routes.tsx`
 3. Update navigation in `src/components/common/Header.tsx`
 
 ### Modify NFT Display
+
 Edit `src/components/nft/NFTCard.tsx` to customize:
+
 - Card layout
 - Image display
 - Metadata presentation
@@ -304,7 +305,9 @@ Edit `src/components/nft/NFTCard.tsx` to customize:
 ## 📝 Next Steps
 
 ### ThirdWeb Integration
+
 1. Install ThirdWeb SDK
+
    ```bash
    npm install @thirdweb-dev/react @thirdweb-dev/sdk
    ```
@@ -316,18 +319,21 @@ Edit `src/components/nft/NFTCard.tsx` to customize:
 4. Add NFT minting functionality
 
 ### IPFS Integration
+
 1. Set up ThirdWeb storage or Pinata
 2. Implement file upload component
 3. Store IPFS hashes in database
 4. Update NFT creation flow
 
-### CMS Integration (Tina.io)
-1. Install Tina CMS
-2. Configure content models
-3. Set up admin interface
-4. Manage artist profiles and content
+### CMS (Already Integrated)
+
+- ✅ TinaCMS is already configured
+- ✅ Access admin at `/admin` route
+- ✅ Manage NFTs and artists via UI
+- ✅ Content stored in `content/` directory
 
 ### Gallery Partner Features (Version 2)
+
 1. Create white-label components
 2. Implement partner dashboard
 3. Set up subdomain routing
@@ -336,6 +342,7 @@ Edit `src/components/nft/NFTCard.tsx` to customize:
 ## 🐛 Troubleshooting
 
 ### Build Issues
+
 ```bash
 # Clear cache and rebuild
 rm -rf node_modules dist
@@ -343,21 +350,23 @@ npm install
 npm run build
 ```
 
-### Supabase Connection
-- Verify environment variables
-- Check Supabase project status
-- Confirm RLS policies
+### Content Loading
+
+- Verify TinaCMS configuration
+- Check content directory structure
+- Confirm markdown files are valid
 
 ### Image Loading
+
 - Verify image URLs in database
 - Check CORS settings
 - Inspect browser console
 
 ## 📚 Documentation
 
-- [Vite Documentation](https://vitejs.dev/)
+- [Next.js Documentation](https://nextjs.org/docs)
 - [React Documentation](https://react.dev/)
-- [Supabase Documentation](https://supabase.com/docs)
+- [TinaCMS Documentation](https://tina.io/docs/)
 - [shadcn/ui Documentation](https://ui.shadcn.com/)
 - [Tailwind CSS Documentation](https://tailwindcss.com/)
 - [ThirdWeb Documentation](https://portal.thirdweb.com/)
@@ -379,6 +388,7 @@ This project is licensed under the MIT License.
 ## 👥 Support
 
 For questions or support:
+
 - Check the FAQ page
 - Review the documentation
 - Contact the development team
